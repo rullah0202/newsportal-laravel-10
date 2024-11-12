@@ -97,7 +97,7 @@ class AdminAuthorController extends Controller
                 'photo' => 'image|mimes:jpg,jpeg,png,gif'
             ]);
 
-            unlink(public_path('uploads/'.$author->photo));
+            @unlink(public_path('uploads/'.$author->photo));
 
             $now = time();
             $ext = $request->file('photo')->extension();
