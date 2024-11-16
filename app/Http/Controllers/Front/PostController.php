@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\Author;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -21,11 +22,11 @@ class PostController extends Controller
         $post_detail = Post::with('rSubCategory')->where('id',$id)->first();
         if($post_detail->author_id == 0)
         {
-            $user_data = Admin::where('id',$post_detail->admin_id)->first();
+            $user_data = User::where('id',$post_detail->admin_id)->first();
         }
         else
         {
-            $user_data = Author::where('id',$post_detail->author_id)->first();
+            $user_data = User::where('id',$post_detail->author_id)->first();
         }
 
         // Update page view count

@@ -8,6 +8,7 @@ use App\Mail\Websitemail;
 use App\Models\Author;
 use App\Models\Language;
 use App\Models\Page;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -47,8 +48,18 @@ class LoginController extends Controller
             'password' => $request->password
         ];
 
-        if(Auth::guard('author')->attempt($credential)) {
-            return redirect()->route('author_home');
+        if(Auth::guard('web')->attempt($credential)) {
+
+            $url = '';
+
+            if ($request->user()->role === 'admin') {
+                $url = '/admin/home';
+            } elseif ($request->user()->role === 'author') {
+                $url = '/author/home';
+            } 
+
+            return redirect()->intended($url)->with('success', 'Login Successfully');
+
         } else {
             return redirect()->route('login')->with('error', 'Information is not correct!');
         }
@@ -56,7 +67,7 @@ class LoginController extends Controller
 
     public function logout()
     {
-        Auth::guard('author')->logout();
+        Auth::guard('web')->logout();
         return redirect()->route('login');
     }
 
@@ -77,7 +88,7 @@ class LoginController extends Controller
             'email.email' => ERROR_EMAIL_VALID
         ]);
 
-        $author_data = Author::where('email',$request->email)->first();
+        $author_data = User::where('email',$request->email)->where('role','author')->first();
         if(!$author_data) {
             return redirect()->back()->with('error',ERROR_EMAIL_NOT_FOUND);
         }
@@ -100,7 +111,7 @@ class LoginController extends Controller
     public function reset_password($token,$email)
     {
         Helpers::read_json();
-        $author_data = Author::where('token',$token)->where('email',$email)->first();
+        $author_data = User::where('token',$token)->where('email',$email)->where('role','author')->first();
         if(!$author_data) {
             return redirect()->route('login');
         }
@@ -120,7 +131,7 @@ class LoginController extends Controller
             'retype_password.same' => ERROR_RETYPE_PASSWORD_SAME,
         ]);
 
-        $author_data = Author::where('token',$request->token)->where('email',$request->email)->first();
+        $author_data = User::where('token',$request->token)->where('email',$request->email)->where('role','author')->first();
 
         $author_data->password = Hash::make($request->password);
         $author_data->token = '';

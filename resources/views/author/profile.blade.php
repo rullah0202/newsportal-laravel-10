@@ -12,17 +12,17 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-3">
-                                <img src="{{ asset('uploads/'.Auth::guard('author')->user()->photo) }}" alt="" class="profile-photo w_100_p">
+                                <img src="{{ asset('uploads/'.Auth::user()->photo) }}" alt="" class="profile-photo w_100_p">
                                 <input type="file" class="form-control mt_10" name="photo">
                             </div>
                             <div class="col-md-9">
                                 <div class="mb-4">
                                     <label class="form-label">Name *</label>
-                                    <input type="text" class="form-control" name="name" value="{{ Auth::guard('author')->user()->name }}">
+                                    <input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}">
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Email *</label>
-                                    <input type="text" class="form-control" name="email" value="{{ Auth::guard('author')->user()->email }}">
+                                    <input type="text" class="form-control" name="email" value="{{ Auth::user()->email }}">
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Password</label>

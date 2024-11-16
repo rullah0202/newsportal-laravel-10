@@ -39,12 +39,12 @@
                                     <td>{{ $row->rSubCategory->rCategory->category_name }}</td>
                                     <td>
                                         @if($row->author_id != 0)
-                                        {{ \App\Models\Author::where('id',$row->author_id)->first()->name }}
+                                        {{ \App\Models\User::where('id',$row->author_id)->first()->name }}
                                         @endif
                                     </td>
                                     <td>
                                         @if($row->admin_id != 0)
-                                        {{ Auth::guard('admin')->user()->name }}
+                                        {{ Auth::user()->name }}
                                         @endif
                                     </td>
                                     <td>{{ $row->rLanguage->name }}</td>

@@ -55,11 +55,11 @@
                                     <div class="user">
                                         @if($item->author_id==0)
                                             @php
-                                            $user_data = \App\Models\Admin::where('id',$item->admin_id)->first();
+                                            $user_data = \App\Models\User::where('id',$item->admin_id)->first();
                                             @endphp
                                         @else
                                             @php
-                                            $user_data = \App\Models\Author::where('id',$item->author_id)->first();
+                                            $user_data = \App\Models\User::where('id',$item->author_id)->first();
                                             @endphp
                                         @endif
                                         <a href="javascript:void;">{{ $user_data->name }}</a>
@@ -227,11 +227,11 @@
                                                 <div class="user">
                                                     @if($single->author_id==0)
                                                         @php
-                                                        $user_data = \App\Models\Admin::where('id',$single->admin_id)->first();
+                                                        $user_data = \App\Models\User::where('id',$single->admin_id)->first();
                                                         @endphp
                                                     @else
                                                         @php
-                                                        $user_data = \App\Models\Author::where('id',$single->author_id)->first();
+                                                        $user_data = \App\Models\User::where('id',$single->author_id)->first();
                                                         @endphp
                                                     @endif
                                                     <a href="javascript:void;">{{ $user_data->name }}</a>
@@ -274,11 +274,11 @@
                                                         <div class="user">
                                                             @if($single->author_id==0)
                                                                 @php
-                                                                $user_data = \App\Models\Admin::where('id',$single->admin_id)->first();
+                                                                $user_data = \App\Models\User::where('id',$single->admin_id)->first();
                                                                 @endphp
                                                             @else
                                                                 @php
-                                                                $user_data = \App\Models\Author::where('id',$single->author_id)->first();
+                                                                $user_data = \App\Models\User::where('id',$single->author_id)->first();
                                                                 @endphp
                                                             @endif
                                                             <a href="javascript:void;">{{ $user_data->name }}</a>

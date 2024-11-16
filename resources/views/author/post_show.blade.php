@@ -38,7 +38,7 @@
                                     <td>{{ $row->rSubCategory->rCategory->category_name }}</td>
                                     <td>
                                         @if($row->author_id != 0)
-                                        {{ Auth::guard('author')->user()->name }}
+                                        {{ Auth::user()->name }}
                                         @endif
                                     </td>
                                     <td>{{ $row->rLanguage->name }}</td>

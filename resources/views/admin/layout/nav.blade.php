@@ -13,8 +13,8 @@
                 <li class="nav-item dropdown">
 
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img alt="image" src="{{ asset('uploads/'.Auth::guard('admin')->user()->photo) }}" class="rounded-circle">
-                        <div class="d-sm-none d-lg-inline-block">{{ Auth::guard('admin')->user()->name }}</div>
+                        <img alt="image" src="{{ asset('uploads/'.Auth::user()->photo) }}" class="rounded-circle">
+                        <div class="d-sm-none d-lg-inline-block">{{ Auth::user()->name }}</div>
                     </a>
                     
                     <ul class="dropdown-menu">

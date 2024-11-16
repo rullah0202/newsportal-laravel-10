@@ -11,7 +11,7 @@ class AuthorHomeController extends Controller
 {
     public function index()
     {
-        $total_news = Post::where('author_id',Auth::guard('author')->user()->id)->count();
+        $total_news = Post::where('author_id',Auth::user()->id)->count();
         return view('author.home', compact('total_news'));
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Mail\Websitemail;
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +28,7 @@ class AdminLoginController extends Controller
             'email' => 'required|email'
         ]);
 
-        $admin_data = Admin::where('email',$request->email)->first();
+        $admin_data = User::where('email',$request->email)->where('role','admin')->first();
         if(!$admin_data) {
             return redirect()->back()->with('error','Email address not found!');
         }
@@ -60,8 +61,18 @@ class AdminLoginController extends Controller
             'password' => $request->password
         ];
 
-        if(Auth::guard('admin')->attempt($credential)) {
-            return redirect()->route('admin_home');
+        if(Auth::guard('web')->attempt($credential)) {
+            
+            $url = '';
+
+            if ($request->user()->role === 'admin') {
+                $url = '/admin/home';
+            } elseif ($request->user()->role === 'author') {
+                $url = '/author/home';
+            } 
+
+            return redirect()->intended($url)->with('success', 'Login Successfully');
+            
         } else {
             return redirect()->route('admin_login')->with('error', 'Information is not correct!');
         }
@@ -69,13 +80,13 @@ class AdminLoginController extends Controller
 
     public function logout()
     {
-        Auth::guard('admin')->logout();
+        Auth::guard('web')->logout();
         return redirect()->route('admin_login');
     }
 
     public function reset_password($token,$email)
     {
-        $admin_data = Admin::where('token',$token)->where('email',$email)->first();
+        $admin_data = User::where('token',$token)->where('email',$email)->where('role','admin')->first();
         if(!$admin_data) {
             return redirect()->route('admin_login');
         }
@@ -91,7 +102,7 @@ class AdminLoginController extends Controller
             'retype_password' => 'required|same:password'
         ]);
 
-        $admin_data = Admin::where('token',$request->token)->where('email',$request->email)->first();
+        $admin_data = User::where('token',$request->token)->where('email',$request->email)->where('role','admin')->first();
 
         $admin_data->password = Hash::make($request->password);
         $admin_data->token = '';

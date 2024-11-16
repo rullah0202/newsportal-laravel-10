@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +18,7 @@ class AdminProfileController extends Controller
 
     public function profile_submit(Request $request)
     {
-        $admin_data = Admin::where('email',Auth::guard('admin')->user()->email)->first();
+        $admin_data = User::where('email',Auth::user()->email)->first();
 
         $request->validate([
             'name' => 'required',

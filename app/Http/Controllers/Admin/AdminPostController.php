@@ -49,7 +49,7 @@ class AdminPostController extends Controller
         $post->post_photo = $final_name;
         $post->visitors = 1;
         $post->author_id = 0;
-        $post->admin_id = Auth::guard('admin')->user()->id;
+        $post->admin_id = Auth::user()->id;
         $post->is_share = $request->is_share;
         $post->is_comment = $request->is_comment;
         $post->language_id = $request->language_id;
@@ -94,7 +94,7 @@ class AdminPostController extends Controller
 
     public function edit($id)
     {
-        $test = Post::where('id',$id)->where('admin_id',Auth::guard('admin')->user()->id)->count();
+        $test = Post::where('id',$id)->where('admin_id',Auth::user()->id)->count();
         if(!$test) {
             return redirect()->route('admin_home');
         }
@@ -166,7 +166,7 @@ class AdminPostController extends Controller
 
     public function delete($id)
     {
-        $test = Post::where('id',$id)->where('admin_id',Auth::guard('admin')->user()->id)->count();
+        $test = Post::where('id',$id)->where('admin_id',Auth::user()->id)->count();
         if(!$test) {
             return redirect()->route('admin_home');
         }

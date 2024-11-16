@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Mail\Websitemail;
 use App\Models\Author;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\validation\Rule;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +14,7 @@ class AdminAuthorController extends Controller
 {
     public function show()
     {
-        $authors = Author::get();
+        $authors = User::where('role','author')->get();
         return view('admin.author_show', compact('authors'));
     }
 
@@ -24,7 +25,7 @@ class AdminAuthorController extends Controller
 
     public function store(Request $request)
     {
-        $author = new Author();
+        $author = new User();
 
         $request->validate([
             'name' => 'required',
@@ -67,20 +68,20 @@ class AdminAuthorController extends Controller
 
     public function edit($id)
     {
-        $author_data = Author::where('id',$id)->first();
+        $author_data = User::where('id',$id)->first();
         return view('admin.author_edit', compact('author_data'));
     }
 
     public function update(Request $request,$id) 
     {
-        $author = Author::where('id',$id)->first();
+        $author = User::where('id',$id)->first();
 
         $request->validate([
             'name' => 'required',
             'email' => [
                 'required',
                 'email',
-                Rule::unique('authors')->ignore($author->id)
+                Rule::unique('users')->ignore($author->id)
             ]
         ]);
 
@@ -115,7 +116,7 @@ class AdminAuthorController extends Controller
 
     public function delete($id)
     {
-        $author = Author::where('id',$id)->first();
+        $author = User::where('id',$id)->first();
         if($author->photo != NULL) {
             @unlink(public_path('uploads/'.$author->photo));
         }

@@ -16,7 +16,7 @@ class AuthorPostController extends Controller
 {
     public function show()
     {
-        $posts = Post::with('rSubCategory.rCategory','rLanguage')->where('author_id',Auth::guard('author')->user()->id)->get();
+        $posts = Post::with('rSubCategory.rCategory','rLanguage')->where('author_id',Auth::user()->id)->get();
         return view('author.post_show', compact('posts'));
     }
 
@@ -48,7 +48,7 @@ class AuthorPostController extends Controller
         $post->post_detail = $request->post_detail;
         $post->post_photo = $final_name;
         $post->visitors = 1;
-        $post->author_id = Auth::guard('author')->user()->id;
+        $post->author_id = Auth::user()->id;
         $post->admin_id = 0;
         $post->is_share = $request->is_share;
         $post->is_comment = $request->is_comment;
@@ -97,7 +97,7 @@ class AuthorPostController extends Controller
     public function edit($id)
     {
 
-        $test = Post::where('id',$id)->where('author_id',Auth::guard('author')->user()->id)->count();
+        $test = Post::where('id',$id)->where('author_id',Auth::user()->id)->count();
         if(!$test) {
             return redirect()->route('author_home');
         }
@@ -167,7 +167,7 @@ class AuthorPostController extends Controller
 
     public function delete($id)
     {
-        $test = Post::where('id',$id)->where('author_id',Auth::guard('author')->user()->id)->count();
+        $test = Post::where('id',$id)->where('author_id',Auth::user()->id)->count();
         if(!$test) {
             return redirect()->route('author_home');
         }
