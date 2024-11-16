@@ -21,14 +21,10 @@
     <div class="container">
         <div class="row">
             
-
-
-
             <div class="col-lg-8 col-md-6">
                         
                 <div class="category-page">
                     <div class="row">
-
 
                         @if(count($post_data))
                         @foreach($post_data as $item)
@@ -83,9 +79,6 @@
                 @include('front.layout.sidebar')
                
             </div>
-
-
-
         </div>
     </div>
 </div>
