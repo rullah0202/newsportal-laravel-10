@@ -13,12 +13,12 @@ class Role
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next,$role): Response
     {
-        if(auth()->user()->role == 'admin'){
-            return $next($request);
+
+        if($request->user()->role !== $role){
+            return redirect('/');
         }
-        
-        return redirect()->route('author_home');
+        return $next($request);
     }
 }

@@ -91,7 +91,7 @@ Route::post('/reset-password-submit', [LoginController::class, 'reset_password_s
 
 
 /* Author */
-// Route::middleware(['auth','roles:author'])->group(function() {
+Route::middleware(['auth','roles:author'])->group(function() {
 
     Route::get('/author/home', [AuthorHomeController::class, 'index'])->name('author_home');
     Route::get('/author/edit-profile', [AuthorProfileController::class, 'index'])->name('author_profile');
@@ -105,7 +105,7 @@ Route::post('/reset-password-submit', [LoginController::class, 'reset_password_s
     Route::get('/author/post/delete/{id}', [AuthorPostController::class, 'delete'])->name('author_post_delete');
     Route::get('/author/post/tag/delete/{id}/{id1}', [AuthorPostController::class, 'delete_tag'])->name('author_post_delete_tag');
 
-// });
+});
 
 
 
